@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Viewer</title>
+    <style>
+        #image-container {
+            max-width: 100%;
+            max-height: 80vh;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body style="background-color: black;">
+    <div class="fuckee">
+        <input type="file" id="file-input" accept="image/*">
+    </div>
+    <input style="border-radius: 20px;background-color: rgb(75, 75, 75);font-size: 200%;font-family: fantasy; color: black;" type="file" id="file-input" accept="image/*">
+    <div id="image-container"></div>
+
+    <script>
+        document.getElementById('file-input').addEventListener('change', function (event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result;
+                    document.getElementById('image-container').innerHTML = `<img src="${imageUrl}" alt="Selected Image">`;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Media Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #mediaPlayer {
+      width: 700px;
+    }
+
+    .dumb {
+      position: absolute;
+      bottom: 90%;
+      right: 1%;
+    }
+    .fuck {
+      position: absolute;
+      top: 90%;
+      right: 20%;
+      scale: 150%;
+    }
+    .fucked {
+      position: absolute;
+      top: 90%;
+      left: 15%;
+      scale: 150%;
+    }
+
+    .LutyTestee {
+      color: white;
+      scale: 150%;
+      font-family: cursive;
+      position: absolute;
+      bottom: 90%;
+      left: 5%;
+    }
+  </style>
+</head>
+
+<body style="background-color: black;">
+  <div class="LutyTestee">
+    <a href="index.html">
+      <button style="border-radius: 20px;background-color: rgb(75, 75, 75);font-size: 200%;font-family: fantasy;color: aliceblue; color: black;">
+        Main Page
+      </button>
+    </a>
+  </div>
+  <h1 style="color: white;">Simple Media Player</h1>
+  <div class="dumb">
+    <input type="file" style="border-radius: 20px;background-color: rgb(75, 75, 75);font-size: 200%;font-family: fantasy; color: black;" accept="audio/*,video/*" onchange="loadMedia(this)" />
+    <br><br>
+   
+  </div>
+  <div class="fuck">
+    
+    <!-- Add Full Screen Button -->
+    <button style="border-radius: 20px;background-color: rgb(75, 75, 75);font-size: 200%;font-family: fantasy; color: black;" onclick="toggleFullScreen()">Full Screen</button>
+
+  </div>
+  <div class="fucked">
+    <button style="border-radius: 20px;background-color: rgb(75, 75, 75);font-size: 200%;font-family: fantasy; color: black;" onclick="playPause()">Play</button>
+    <button style="border-radius: 20px;background-color: rgb(75, 75, 75);font-size: 200%;font-family: fantasy; color: black;" onclick="toggleLoop()">Toggle Loop</button>
+  </div>
+
+
+  <video maxwidth="700" maxheight="100" id="mediaPlayer" controls>
+    Your browser does not support the video tag.
+  </video>
+
+  <script>
+    const mediaPlayer = document.getElementById('mediaPlayer');
+    const fileInput = document.querySelector('input[type="file"]');
+    const playlist = [];
+    let currentFileIndex = 0;
+  
+    function loadMedia(input) {
+      const file = input.files[0];
+  
+      if (file) {
+        const objectURL = URL.createObjectURL(file);
+        playlist.push(objectURL);
+  
+        if (playlist.length === 1) {
+          playNext();
+        }
+      }
+    }
+  
+    function playNext() {
+      if (currentFileIndex < playlist.length) {
+        mediaPlayer.src = playlist[currentFileIndex];
+        mediaPlayer.load();
+        mediaPlayer.play();
+        currentFileIndex++;
+      } else {
+        // Playlist is empty or all files have been played
+        currentFileIndex = 0;
+        playlist.length = 0; // Clear the playlist
+      }
+    }
+  
+    function toggleLoop() {
+      mediaPlayer.loop = !mediaPlayer.loop;
+    }
+  
+    function toggleFullScreen() {
+      if (mediaPlayer.requestFullscreen) {
+        mediaPlayer.requestFullscreen();
+      } else if (mediaPlayer.mozRequestFullScreen) {
+        mediaPlayer.mozRequestFullScreen();
+      } else if (mediaPlayer.webkitRequestFullscreen) {
+        mediaPlayer.webkitRequestFullscreen();
+      } else if (mediaPlayer.msRequestFullscreen) {
+        mediaPlayer.msRequestFullscreen();
+      }
+    }
+  
+    function playPause() {
+      if (mediaPlayer.paused) {
+        mediaPlayer.play();
+      } else {
+        mediaPlayer.pause();
+      }
+    }
+  
+    mediaPlayer.addEventListener('ended', playNext);
+  </script>
+</body>
+
+</html>
+
+
