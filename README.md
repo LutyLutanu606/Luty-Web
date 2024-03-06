@@ -1,2 +1,2 @@
 # Luty-Web
-Why?
+This Is Luty Web For Some Reason We Have One :)
